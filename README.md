@@ -1,4 +1,4 @@
-# sly-analysis
+# RMSF analysis
 
 # A python script to process rmsf data
 
