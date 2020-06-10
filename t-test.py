@@ -38,7 +38,6 @@ prod_20_list = payload.get(file_names[1])
 np_prod_2 = np.array(prod_2_list)
 np_prod_20 = np.array(prod_20_list)
 
-# this actually works for t-test lol. Didnt need to do lines 45 through 54. Both values (t_stat  annd t2  are  same)
 t2, p2 = stats.ttest_ind(np_prod_2,np_prod_20)
 print("t = " + str(t2))
 print("p = " + str(2*p2))
