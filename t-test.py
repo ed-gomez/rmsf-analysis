@@ -1,5 +1,5 @@
 from os import listdir
-from os.path import isfile, join
+from os.path import join
 import numpy as np
 from scipy import stats
 
@@ -8,6 +8,9 @@ LOCAL_WORKING_DIRECTORY = '.'
 
 def is_agr_file(file_name):
   return file_name.endswith(AGR_FILE_TYPE)
+
+def does_not_contain_ampersand(line):
+  return "@" not in line
 
 # Read files in current directory
 all_agr_files = [f for f in listdir(LOCAL_WORKING_DIRECTORY) if is_agr_file(join(LOCAL_WORKING_DIRECTORY, f))]
@@ -26,7 +29,7 @@ for file in all_agr_files:
     y_values = []
   payload[file.name] = y_values
   for line in lines:
-    if "@" not in line:
+    if does_not_contain_ampersand(line):
       split_string = line.split()
       sanitized_lines += [split_string]
       y_values += [float(split_string[1])]
