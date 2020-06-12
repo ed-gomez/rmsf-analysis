@@ -1,16 +1,16 @@
 from os import listdir
 from os.path import isfile, join
-import io
 import numpy as np
 from scipy import stats
 
+AGR_FILE_TYPE = '.agr'
+LOCAL_WORKING_DIRECTORY = '.'
+
 def is_agr_file(file_name):
-  return file_name.endswith('.agr')
+  return file_name.endswith(AGR_FILE_TYPE)
 
 # Read files in current directory
-my_path = "."
-all_files = [f for f in listdir(my_path) if isfile(join(my_path, f))]
-clean_files = [ f for f in all_files if is_agr_file(f) ]
+all_agr_files = [f for f in listdir(LOCAL_WORKING_DIRECTORY) if is_agr_file(join(LOCAL_WORKING_DIRECTORY, f))]
 
 sanitized_lines = []
 split_string = ""
@@ -18,7 +18,7 @@ y_values = []
 file_names = []
 payload = {}
 
-for file in clean_files:
+for file in all_agr_files:
   file = open(file)
   file_names += [file.name]
   lines = file.readlines()
@@ -38,8 +38,9 @@ prod_20_list = payload.get(file_names[1])
 np_prod_2 = np.array(prod_2_list)
 np_prod_20 = np.array(prod_20_list)
 
-t2, p2 = stats.ttest_ind(np_prod_2,np_prod_20)
-print("t = " + str(t2))
-print("p = " + str(2*p2))
+# this actually works for t-test. Didnt need to do lines 45 through 54. Both values (t_stat  annd t2  are  same)
+t_test_result, p_value = stats.ttest_ind(np_prod_2,np_prod_20)
+print("t = " + str(t_test_result))
+print("p = " + str(2*p_value))
 
 
